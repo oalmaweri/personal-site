@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Projects · Osamah Almaweri</title>
+  <meta name="description" content="Infrastructure case studies with diagrams: a weekend two-building dental expansion, a mosque live-streaming standard, Active Directory repair and Microsoft 365 hybrid identity, a firewall ACL outage, a Server 2008 R2 to 2019 migration, a multi-site AD build, and more.">
+  <link rel="canonical" href="https://www.osamahalmaweri.com/projects">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a6c8c'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' fill='white' text-anchor='middle'%3EOA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Schibsted+Grotesk:wght@600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap navbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">OA</span>
+      <span><span class="brand-name">Osamah Almaweri</span><span class="brand-role">Network &amp; Systems Administrator · Dearborn, MI</span></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="about.html">About</a>
+      <a class="nav-cta" href="Osamah_Almaweri_IT_Systems_Administrator.pdf">Resume (PDF)</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="page-head">
+    <p class="eyebrow">Case studies</p>
+    <h1>Projects</h1>
+    <p class="lede">Real deployments: the problem, what I built, and how it turned out. Diagrams show the design with addresses, hostnames and other identifying details removed. Most client names are withheld.</p>
+  </section>
+
+  <ul class="jump" aria-label="Jump to project">
+    <li><a href="#dental-link">Two-building link</a></li>
+    <li><a href="#streaming">Streaming standard</a></li>
+    <li><a href="#ad-repair">AD repair + M365</a></li>
+    <li><a href="#acl-outage">Cutover outage</a></li>
+    <li><a href="#overhaul">Migration &amp; VoIP</a></li>
+    <li><a href="#multisite-ad">Multi-site AD</a></li>
+    <li><a href="#power-resilience">Power resilience</a></li>
+    <li><a href="#surveillance">64-camera network</a></li>
+    <li><a href="#more">More work</a></li>
+    <li><a href="#proposals">Designs</a></li>
+  </ul>
+
+  <!-- ============ 0. DENTAL TWO-BUILDING LINK ============ -->
+  <article class="case" id="dental-link">
+    <p class="eyebrow">Network expansion · one weekend</p>
+    <h2>Two-building dental practice link</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Dental practice expanding into a second building across a shared parking lot</dd>
+      <dt>Scale</dt><dd>About 30 workstations across both buildings, including the billing team</dd>
+      <dt>Role</dt><dd>Design and installation (1010 IT Solutions)</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>The practice added a second building and needed both buildings on one network, sharing the domain and practice systems. Everything had to be done over a single weekend so patients were seen as usual on Monday.</p>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li>Ran a protected above-ground cable between the buildings as the primary link.</li>
+      <li>Added a wireless bridge as a failover path, so the second building stays connected if the cable is damaged.</li>
+      <li>Extended the domain and the practice's systems to the new building, so both buildings work as one network.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 240" role="img" aria-labelledby="dg0t">
+        <title id="dg0t">Building A and Building B linked by a wired primary run and a wireless bridge failover across a shared parking lot, with about 30 workstations across both buildings on one network.</title>
+        <rect class="zone" x="20" y="20" width="230" height="200" rx="10"/><text class="ttl" x="36" y="40">BUILDING A</text>
+        <rect class="zone" x="470" y="20" width="230" height="200" rx="10"/><text class="ttl" x="486" y="40">BUILDING B · NEW</text>
+        <text class="lbl" x="360" y="40" text-anchor="middle">shared parking lot</text>
+        <rect class="node key" x="40" y="54" width="190" height="40" rx="6"/><text x="135" y="78" text-anchor="middle">Switch</text>
+        <rect class="node" x="40" y="112" width="190" height="44" rx="6"/><text x="135" y="132" text-anchor="middle">Domain + practice</text><text class="sub" x="135" y="147" text-anchor="middle">systems</text>
+        <rect class="node" x="40" y="172" width="190" height="34" rx="6"/><text x="135" y="194" text-anchor="middle">Workstations</text>
+        <path class="link" d="M135 94 V112"/>
+        <rect class="node key" x="490" y="54" width="190" height="40" rx="6"/><text x="585" y="78" text-anchor="middle">Switch</text>
+        <rect class="node" x="490" y="112" width="190" height="44" rx="6"/><text x="585" y="132" text-anchor="middle">Workstations</text><text class="sub" x="585" y="147" text-anchor="middle">incl. billing</text>
+        <path class="link" d="M585 94 V112"/>
+        <path class="link" d="M230 70 H490" style="stroke:var(--accent);stroke-width:2.4"/>
+        <text class="lbl" x="360" y="62" text-anchor="middle">primary · wired run</text>
+        <rect class="node" x="285" y="128" width="60" height="28" rx="5"/><text class="sub" x="315" y="146" text-anchor="middle">radio</text>
+        <rect class="node" x="375" y="128" width="60" height="28" rx="5"/><text class="sub" x="405" y="146" text-anchor="middle">radio</text>
+        <path class="link" d="M230 86 L285 134"/><path class="link" d="M490 86 L435 134"/>
+        <path class="net" d="M345 142 H375"/>
+        <text class="lbl" x="360" y="178" text-anchor="middle">failover · wireless bridge</text>
+        <text class="lbl" x="360" y="212" text-anchor="middle">~30 workstations · one network</text>
+      </svg>
+      <figcaption>Logical layout. Addressing and device names omitted.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>Both buildings went live over one weekend, with a redundant link between them. The practice opened Monday with no disruption to patient care.</p>
+    <ul class="tags"><li>Building-to-building link</li><li>Wireless bridge</li><li>Failover</li><li>Active Directory</li><li>Healthcare</li></ul>
+  </article>
+
+  <!-- ============ 1. STREAMING STANDARD ============ -->
+  <article class="case" id="streaming">
+    <p class="eyebrow">AV &amp; network · adopted as a standard</p>
+    <h2>Mosque live-streaming standard</h2>
+    <dl class="spec">
+      <dt>Origin</dt><dd>Designed for Alhuda Islamic Association, Southeast Michigan</dd>
+      <dt>Adopted by</dt><dd>American Moslem Society (Dearborn), Islamic Center of Detroit, Community Activity Center, United Community Center, American Moslem Society (Coldwater), and many others. It is now used at most mosques across Dearborn and Hamtramck.</dd>
+      <dt>Stack</dt><dd>PoE PTZ cameras · Blackmagic switchers &amp; Web Presenters · HDMI matrix &amp; extenders · video VLAN · VPN · point-to-point wireless</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>Services and fundraising events needed a stream that worked every week, kept audio in sync, could be run by different volunteers, and could reach events held outdoors. Each community was improvising its own setup.</p>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li><strong>Capture:</strong> primary and auxiliary PTZ cameras on PoE with static addresses, isolated on a dedicated video VLAN.</li>
+      <li><strong>Signal flow:</strong> SDI from the main camera into Blackmagic switchers and Web Presenters, then to a streaming and editing workstation for YouTube. HDMI is sent at the same time through a matrix and Ethernet extenders to displays around the building.</li>
+      <li><strong>Audio:</strong> house sound fed directly into the switcher to remove audio/video drift.</li>
+      <li><strong>Remote control:</strong> off-site operators run the stream over a secure VPN.</li>
+      <li><strong>Outdoor reach:</strong> a 500-foot wireless bridge to an outdoor-rated cabinet with its own PoE switch. A year later I redesigned it with dedicated video transmission and frequency separation, so the outdoor livestream no longer drops.</li>
+      <li><strong>Standardization:</strong> diagrams, configuration notes and checklists so other organizations could repeat the build and volunteers could run it.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 800 300" role="img" aria-labelledby="dg1t">
+        <title id="dg1t">Streaming signal flow: cameras to switcher to Web Presenter to workstation to YouTube, with HDMI to in-building displays, house audio into the switcher, remote VPN control, and an outdoor wireless extension.</title>
+        <defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="m1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow acc" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="node key" x="20" y="50" width="130" height="44" rx="6"/><text x="85" y="70" text-anchor="middle">PTZ cameras</text><text class="sub" x="85" y="85" text-anchor="middle">PoE · video VLAN</text>
+        <rect class="node key" x="180" y="50" width="130" height="44" rx="6"/><text x="245" y="70" text-anchor="middle">Switcher</text><text class="sub" x="245" y="85" text-anchor="middle">Blackmagic</text>
+        <rect class="node" x="340" y="50" width="130" height="44" rx="6"/><text x="405" y="70" text-anchor="middle">Web Presenter</text><text class="sub" x="405" y="85" text-anchor="middle">encode</text>
+        <rect class="node" x="500" y="50" width="130" height="44" rx="6"/><text x="565" y="70" text-anchor="middle">Workstation</text><text class="sub" x="565" y="85" text-anchor="middle">stream + edit</text>
+        <rect class="node" x="660" y="50" width="120" height="44" rx="6"/><text x="720" y="77" text-anchor="middle">YouTube</text>
+        <path class="link" d="M150 72 H178" marker-end="url(#m1)"/><text class="lbl" x="164" y="44" text-anchor="middle">SDI</text>
+        <path class="link" d="M310 72 H338" marker-end="url(#m1)"/>
+        <path class="link" d="M470 72 H498" marker-end="url(#m1)"/>
+        <path class="link" d="M630 72 H658" marker-end="url(#m1)"/>
+        <rect class="node" x="20" y="160" width="130" height="44" rx="6"/><text x="85" y="180" text-anchor="middle">Outdoor cabinet</text><text class="sub" x="85" y="195" text-anchor="middle">PoE switch</text>
+        <path class="net" d="M85 160 V96" marker-end="url(#m1a)"/><text class="lbl" x="93" y="122">PtP link</text><text class="lbl" x="93" y="136">~500 ft</text>
+        <rect class="node" x="180" y="160" width="130" height="44" rx="6"/><text x="245" y="180" text-anchor="middle">House sound</text><text class="sub" x="245" y="195" text-anchor="middle">mixer feed</text>
+        <path class="link" d="M245 160 V96" marker-end="url(#m1)"/>
+        <rect class="node" x="340" y="160" width="130" height="44" rx="6"/><text x="405" y="180" text-anchor="middle">HDMI matrix</text><text class="sub" x="405" y="195" text-anchor="middle">distribution</text>
+        <path class="link" d="M300 94 L360 158" marker-end="url(#m1)"/><text class="lbl" x="338" y="128">HDMI</text>
+        <rect class="node" x="500" y="160" width="130" height="44" rx="6"/><text x="565" y="180" text-anchor="middle">Displays</text><text class="sub" x="565" y="195" text-anchor="middle">around building</text>
+        <path class="link" d="M470 182 H498" marker-end="url(#m1)"/><text class="lbl" x="484" y="222" text-anchor="middle">HDMI over Ethernet</text>
+        <rect class="node" x="660" y="160" width="120" height="44" rx="6"/><text x="720" y="180" text-anchor="middle">Remote operator</text><text class="sub" x="720" y="195" text-anchor="middle">off-site</text>
+        <path class="net" d="M700 160 L600 96" marker-end="url(#m1a)"/><text class="lbl" x="664" y="128">VPN</text>
+        <rect class="node" x="20" y="240" width="130" height="40" rx="6"/><text x="85" y="264" text-anchor="middle">Outdoor cameras</text>
+        <path class="link" d="M85 240 V206" marker-end="url(#m1)"/>
+        <path class="link" d="M500 262 H530"/><text class="lbl" x="538" y="266">video / audio</text>
+        <path class="net" d="M630 262 H660"/><text class="lbl" x="668" y="266">network link</text>
+      </svg>
+      <figcaption>Signal flow for a standard site. The outdoor extension is added where a site holds outdoor events.</figcaption>
+    </figure>
+
+    <figure class="drawing">
+      <a href="images/streaming-design.png" target="_blank" rel="noopener"><img src="images/streaming-design.png" alt="Original Visio design for the Alhuda streaming system: three PTZ cameras on a Cisco access switch, a yellow streaming-network zone with media PC, media NAS and editing PC, a camera switcher on SDI, and an HDbitT transmitter feeding projectors and TVs through a Cat6 patch panel." loading="lazy" width="1607" height="1235"></a>
+      <figcaption>My original Visio drawing for the first site, showing the switch ports, patch panel and HDbitT distribution. Device hostnames replaced. Click to enlarge.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>A documented, repeatable setup that volunteers can run, now in use at most mosques in Dearborn and Hamtramck. At Alhuda it supported fundraising that generated <strong>$373,000</strong> in donor contributions.</p>
+    <ul class="tags"><li>Live streaming</li><li>SDI / HDMI</li><li>VLAN</li><li>PoE</li><li>VPN</li><li>Wireless bridging</li><li>Standardization</li></ul>
+  </article>
+
+  <!-- ============ 2. AD REPAIR + M365 ============ -->
+  <article class="case" id="ad-repair">
+    <p class="eyebrow">Identity · troubleshooting</p>
+    <h2>Active Directory repair and Microsoft 365 hybrid identity</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Religious nonprofit, 10–20 users</dd>
+      <dt>Stack</dt><dd>Windows Server 2019 · AD DS · DNS · Hyper-V · Microsoft 365 via CSP · Entra Connect Sync</dd>
+      <dt>Role</dt><dd>Diagnosis, remediation and cloud onboarding</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>New workstations could not join the domain and failed with error 0x54b ("network name cannot be found"). The organization ran on a single physical domain controller that was also its file server. If that server failed, sign-ins and shared files went down with it.</p>
+
+    <h3>Diagnosis</h3>
+    <ul class="points">
+      <li>Traced the failures to DNS. The <code>_msdcs</code> and <code>_ldap</code> SRV records that clients use to find a domain controller were missing.</li>
+      <li>Found DHCP running on the domain controller itself. The domain name was also hosted publicly at the registrar, which created a split between internal and public DNS.</li>
+      <li>Decided not to demote the only domain controller, a common shortcut that risks losing the domain entirely.</li>
+    </ul>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li>Corrected internal DNS so clients locate the domain controllers reliably.</li>
+      <li>Added a second domain controller as a Hyper-V virtual machine, giving the domain redundancy and a safe path to retire or rebuild the original server later.</li>
+      <li>Brought the organization's domain into Microsoft 365 through a CSP. That included fixing GDAP delegated-admin permissions so the tenant could be managed.</li>
+      <li>Installed Entra Connect Sync so staff use one identity, <em>user@their-domain</em>, both on-premises and in Microsoft 365.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 250" role="img" aria-labelledby="dg2t">
+        <title id="dg2t">Hybrid identity: Windows PCs authenticate to two on-premises domain controllers that replicate with each other; the first syncs identities to Entra ID and Microsoft 365.</title>
+        <defs><marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow acc" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="zone" x="20" y="20" width="400" height="214" rx="10"/><text class="ttl" x="36" y="42">ON-PREMISES</text>
+        <rect class="zone" x="500" y="20" width="200" height="214" rx="10"/><text class="ttl" x="516" y="42">MICROSOFT CLOUD</text>
+        <rect class="node" x="40" y="138" width="150" height="44" rx="6"/><text x="115" y="158" text-anchor="middle">Windows PCs</text><text class="sub" x="115" y="173" text-anchor="middle">domain-joined</text>
+        <rect class="node key" x="230" y="64" width="170" height="44" rx="6"/><text x="315" y="84" text-anchor="middle">DC 1 · physical</text><text class="sub" x="315" y="99" text-anchor="middle">AD DS · DNS · files</text>
+        <rect class="node key" x="230" y="166" width="170" height="44" rx="6"/><text x="315" y="186" text-anchor="middle">DC 2 · Hyper-V VM</text><text class="sub" x="315" y="201" text-anchor="middle">AD DS · DNS</text>
+        <path class="link" d="M315 108 V166"/><text class="lbl" x="323" y="141">replication</text>
+        <path class="link" d="M190 152 L230 92"/><path class="link" d="M190 168 L230 186"/>
+        <rect class="node key" x="515" y="64" width="170" height="44" rx="6"/><text x="600" y="84" text-anchor="middle">Entra ID</text><text class="sub" x="600" y="99" text-anchor="middle">synced identities</text>
+        <rect class="node" x="515" y="166" width="170" height="44" rx="6"/><text x="600" y="186" text-anchor="middle">Microsoft 365</text><text class="sub" x="600" y="201" text-anchor="middle">mail · SharePoint</text>
+        <path class="net" d="M400 86 H513" marker-end="url(#m2)"/><text class="lbl" x="457" y="78" text-anchor="middle">Entra Connect</text><text class="lbl" x="457" y="102" text-anchor="middle">sync</text>
+        <path class="link" d="M600 108 V166"/>
+      </svg>
+      <figcaption>End state. Hostnames, domain names and addressing are omitted.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>Workstations join and sign in normally. The domain no longer depends on one machine, and staff have a single identity across on-premises resources and Microsoft 365. Everything has been running cleanly since.</p>
+    <ul class="tags"><li>Active Directory</li><li>DNS / SRV records</li><li>Hyper-V</li><li>Entra Connect</li><li>Microsoft 365</li><li>GDAP / CSP</li></ul>
+  </article>
+
+  <!-- ============ 2b. ACL OUTAGE ============ -->
+  <article class="case" id="acl-outage">
+    <p class="eyebrow">Troubleshooting · after a cutover</p>
+    <h2>Classroom outage after a network cutover</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Religious nonprofit with classrooms</dd>
+      <dt>Stack</dt><dd>Palo Alto firewall · Cisco Layer 3 core · VLANs · Windows Server DNS/DHCP · PowerShell</dd>
+      <dt>Role</dt><dd>Incident response and root-cause analysis</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>After a planned cutover to new network equipment, classroom machines on the staff VLAN couldn't get addresses or resolve names. The domain controller sat on the management VLAN. Ping between the two worked, so the network looked healthy.</p>
+
+    <h3>What I did</h3>
+    <ul class="points">
+      <li><strong>Restored service first:</strong> moved the affected users to a temporary, isolated VLAN with access to the resources they needed, so classes could continue without opening up the network.</li>
+      <li><strong>Diagnosed from the endpoints:</strong> used PowerShell on several workstations and confirmed they couldn't locate or resolve the domain controller, even though ping succeeded.</li>
+      <li><strong>Found the root cause:</strong> traced it back to one firewall ACL between the management and staff VLANs that blocked DNS and DHCP while allowing ping.</li>
+      <li><strong>Fixed the rule</strong> within two days.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 220" role="img" aria-labelledby="dg7t">
+        <title id="dg7t">Classroom PCs on the staff VLAN could ping the domain controller through the firewall, but an ACL blocked DNS and DHCP. Affected users were moved to a temporary VLAN whose path to DNS and DHCP was allowed while the rule was fixed.</title>
+        <rect class="node" x="20" y="30" width="180" height="60" rx="6"/><text x="110" y="56" text-anchor="middle">Classroom PCs</text><text class="sub" x="110" y="72" text-anchor="middle">staff VLAN</text>
+        <rect class="node key" x="270" y="30" width="180" height="170" rx="8"/><text x="360" y="110" text-anchor="middle">Firewall</text><text class="sub" x="360" y="126" text-anchor="middle">inter-VLAN ACLs</text>
+        <rect class="node" x="520" y="30" width="180" height="170" rx="8"/><text x="610" y="110" text-anchor="middle">Domain controller</text><text class="sub" x="610" y="126" text-anchor="middle">management VLAN</text><text class="sub" x="610" y="141" text-anchor="middle">DNS · DHCP</text>
+        <path class="link" d="M200 46 H270"/><path class="link" d="M450 46 H520"/>
+        <text class="lbl okc" x="235" y="40" text-anchor="middle">ping ✓</text>
+        <path class="bad" d="M200 76 H262"/><text class="warn" x="266" y="80" font-size="14">✕</text>
+        <text class="lbl warn" x="20" y="110">DNS · DHCP blocked by ACL</text>
+        <rect class="node" x="20" y="150" width="180" height="50" rx="6" style="stroke:var(--accent)"/><text x="110" y="171" text-anchor="middle">Affected users</text><text class="sub" x="110" y="187" text-anchor="middle">temporary VLAN</text>
+        <path class="net" d="M200 175 H270"/><path class="net" d="M450 175 H520"/>
+        <text class="lbl" x="485" y="166" text-anchor="middle">allowed</text>
+      </svg>
+      <figcaption>The trap: ping succeeded, so the network looked fine, while the services clients depend on were blocked.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>Classes kept running on the temporary VLAN, and the root cause was fixed within two days. Since then, after every cutover I check that services like DNS and DHCP actually work, not just that ping succeeds.</p>
+    <ul class="tags"><li>Firewall ACLs</li><li>VLANs</li><li>DNS / DHCP</li><li>PowerShell</li><li>Incident response</li></ul>
+  </article>
+
+  <!-- ============ 3. QREM OVERHAUL ============ -->
+  <article class="case" id="overhaul">
+    <p class="eyebrow">In-house · infrastructure overhaul</p>
+    <h2>Server migration, phone system and infrastructure overhaul</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Quality Restaurant Equipment Masters, warehouse and office (my employer)</dd>
+      <dt>Stack</dt><dd>Windows Server 2008 R2 → 2019 · DFS Replication · VoIP · Syncro RMM · Group Policy · Python</dd>
+      <dt>Role</dt><dd>Network and Systems Administrator</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>The company ran on a Windows Server 2008 R2 server, long out of support. Five or six separate phone lines ran across the warehouse and office, and nobody had a clear picture of who used which line or why so many were needed. Patching was inconsistent.</p>
+
+    <h3>What I did</h3>
+    <ul class="points">
+      <li><strong>Server migration:</strong> moved the 2008 R2 environment to a new Windows Server 2019 server in planned phases, using DFS Replication to move data with no loss, then repurposed the old server as a redundant server.</li>
+      <li><strong>Traced every phone line</strong> through the warehouse and office and mapped who had access to each one and how it was actually used.</li>
+      <li><strong>Deployed a VoIP system</strong> for 7 users with softphones, auto attendant, simultaneous ring to mobile, holiday and after-hours routing, voicemail, and overhead paging to the warehouse.</li>
+      <li><strong>Standardized patching</strong> with Syncro RMM and Group Policy for workstations, with manual patching for the remaining legacy 2008 R2 systems.</li>
+      <li><strong>Documented the environment</strong> in a company-wide knowledge base.</li>
+      <li><strong>Built an inventory tool</strong> in Python with barcode scanning, CSV import/export, packaged as a Windows app. I'm now integrating it with the WooCommerce store and QuickBooks Desktop.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 230" role="img" aria-labelledby="dg3t">
+        <title id="dg3t">Before: five to six separate phone lines, each tied to its own handsets with unclear ownership. After: consolidated lines feed one phone system that serves office extensions, warehouse extensions, and mobile softphones.</title>
+        <defs><marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="zone" x="20" y="14" width="300" height="204" rx="10"/><text class="ttl" x="36" y="36">BEFORE</text>
+        <rect class="zone" x="360" y="14" width="340" height="204" rx="10"/><text class="ttl" x="376" y="36">AFTER</text>
+        <rect class="node old" x="40" y="50" width="110" height="24" rx="5"/><text x="95" y="66" text-anchor="middle">Line 1</text>
+        <rect class="node old" x="40" y="82" width="110" height="24" rx="5"/><text x="95" y="98" text-anchor="middle">Line 2</text>
+        <rect class="node old" x="40" y="114" width="110" height="24" rx="5"/><text x="95" y="130" text-anchor="middle">Line 3</text>
+        <rect class="node old" x="40" y="146" width="110" height="24" rx="5"/><text x="95" y="162" text-anchor="middle">Line 4</text>
+        <rect class="node old" x="40" y="178" width="110" height="24" rx="5"/><text x="95" y="194" text-anchor="middle">Line 5–6</text>
+        <path class="link" d="M150 62 H200"/><path class="link" d="M150 94 H200"/><path class="link" d="M150 126 H200"/><path class="link" d="M150 158 H200"/><path class="link" d="M150 190 H200"/>
+        <text class="lbl" x="208" y="66">handsets ?</text><text class="lbl" x="208" y="98">who uses it?</text><text class="lbl" x="208" y="130">warehouse ?</text><text class="lbl" x="208" y="162">office ?</text><text class="lbl" x="208" y="194">unclear</text>
+        <rect class="node" x="380" y="54" width="150" height="40" rx="6"/><text x="455" y="78" text-anchor="middle">Consolidated lines</text>
+        <rect class="node key" x="380" y="136" width="150" height="44" rx="6"/><text x="455" y="156" text-anchor="middle">Phone system</text><text class="sub" x="455" y="171" text-anchor="middle">extensions</text>
+        <path class="link" d="M455 94 V134" marker-end="url(#m3)"/>
+        <rect class="node" x="570" y="50" width="115" height="36" rx="6"/><text x="627" y="72" text-anchor="middle">Office ext.</text>
+        <rect class="node" x="570" y="112" width="115" height="36" rx="6"/><text x="627" y="134" text-anchor="middle">Warehouse ext.</text>
+        <rect class="node" x="570" y="174" width="115" height="36" rx="6"/><text x="627" y="196" text-anchor="middle">Softphones</text>
+        <path class="link" d="M530 150 L568 70" marker-end="url(#m3)"/><path class="link" d="M530 158 H568" marker-end="url(#m3)"/><path class="link" d="M530 166 L568 190" marker-end="url(#m3)"/>
+      </svg>
+      <figcaption>Phone consolidation, before and after.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>A supported server with no data lost in the move, a redundant server built from the old hardware, and one phone system with clear ownership that reaches staff anywhere in the building or on mobile.</p>
+    <ul class="tags"><li>Server 2019</li><li>DFS-R</li><li>VoIP</li><li>Softphones</li><li>Syncro RMM</li><li>Python</li></ul>
+  </article>
+
+  <!-- ============ 4. MULTI-SITE AD ============ -->
+  <article class="case" id="multisite-ad">
+    <p class="eyebrow">Identity &amp; infrastructure</p>
+    <h2>Multi-site Active Directory build</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Tax and law firm, three locations, about 20 users</dd>
+      <dt>Stack</dt><dd>Windows Server 2022 · Active Directory · UniFi gateways · site-to-site VPN · Windows 11 Pro</dd>
+      <dt>Role</dt><dd>Design, build and handoff (1010 IT Solutions)</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>The firm ran on a Windows 11–based setup with no server or domain. Each office worked separately, accounts and file access were managed machine by machine, and sensitive client records had no central protection.</p>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li>A Windows Server 2022 domain with a domain controller at each office, replicating over UniFi site-to-site VPN tunnels.</li>
+      <li>OUs and security groups matched to job roles: <em>Staff</em> with read/write access and <em>Limited</em> with read-only access to shared data.</li>
+      <li>File shares with NTFS permissions, file-access auditing and Volume Shadow Copies so users can restore their own deleted files.</li>
+      <li>Group Policy controls against data exfiltration: USB storage blocked, file copying restricted, network locations hidden, and a standard lock screen.</li>
+      <li>Domain-joined every workstation and resolved RDP issues so staff can reach machines between offices.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 262" role="img" aria-labelledby="dg4t">
+        <title id="dg4t">Three offices, each with a UniFi gateway, a domain controller and Windows 11 Pro clients, linked by site-to-site VPN for Active Directory replication.</title>
+        <path class="net" d="M120 22 H600"/><text class="lbl" x="360" y="13" text-anchor="middle">site-to-site VPN · AD replication</text>
+        <rect class="zone" x="20" y="34" width="200" height="214" rx="10"/>
+        <path class="net" d="M120 22 V50"/>
+        <rect class="node" x="40" y="50" width="160" height="32" rx="6"/><text x="120" y="71" text-anchor="middle">UniFi gateway</text>
+        <rect class="node key" x="40" y="106" width="160" height="42" rx="6"/><text x="120" y="125" text-anchor="middle">Domain controller</text><text class="sub" x="120" y="140" text-anchor="middle">Server 2022</text>
+        <rect class="node" x="40" y="172" width="160" height="32" rx="6"/><text x="120" y="193" text-anchor="middle">Win 11 Pro clients</text>
+        <path class="link" d="M120 82 V106"/><path class="link" d="M120 148 V172"/>
+        <text class="ttl" x="120" y="232" text-anchor="middle">OFFICE A</text>
+        <rect class="zone" x="260" y="34" width="200" height="214" rx="10"/>
+        <path class="net" d="M360 22 V50"/>
+        <rect class="node" x="280" y="50" width="160" height="32" rx="6"/><text x="360" y="71" text-anchor="middle">UniFi gateway</text>
+        <rect class="node key" x="280" y="106" width="160" height="42" rx="6"/><text x="360" y="125" text-anchor="middle">Domain controller</text><text class="sub" x="360" y="140" text-anchor="middle">Server 2022</text>
+        <rect class="node" x="280" y="172" width="160" height="32" rx="6"/><text x="360" y="193" text-anchor="middle">Win 11 Pro clients</text>
+        <path class="link" d="M360 82 V106"/><path class="link" d="M360 148 V172"/>
+        <text class="ttl" x="360" y="232" text-anchor="middle">OFFICE B</text>
+        <rect class="zone" x="500" y="34" width="200" height="214" rx="10"/>
+        <path class="net" d="M600 22 V50"/>
+        <rect class="node" x="520" y="50" width="160" height="32" rx="6"/><text x="600" y="71" text-anchor="middle">UniFi gateway</text>
+        <rect class="node key" x="520" y="106" width="160" height="42" rx="6"/><text x="600" y="125" text-anchor="middle">Domain controller</text><text class="sub" x="600" y="140" text-anchor="middle">Server 2022</text>
+        <rect class="node" x="520" y="172" width="160" height="32" rx="6"/><text x="600" y="193" text-anchor="middle">Win 11 Pro clients</text>
+        <path class="link" d="M600 82 V106"/><path class="link" d="M600 148 V172"/>
+        <text class="ttl" x="600" y="232" text-anchor="middle">OFFICE C</text>
+      </svg>
+      <figcaption>One domain, three sites. Each office keeps signing in locally if a tunnel drops.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>One domain across three offices with redundant domain controllers, so staff share resources across sites under central accounts, auditing and data-loss controls. The build is complete, and the client now calls in only for support.</p>
+    <ul class="tags"><li>Windows Server 2022</li><li>AD DS</li><li>Group Policy</li><li>NTFS</li><li>Site-to-site VPN</li><li>UniFi</li></ul>
+  </article>
+
+  <!-- ============ 5. POWER RESILIENCE ============ -->
+  <article class="case" id="power-resilience">
+    <p class="eyebrow">Continuity &amp; recovery</p>
+    <h2>Server rebuild and power resilience</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Small business, on-premises only</dd>
+      <dt>Stack</dt><dd>Server-grade hardware · RAID 5 · Windows Server 2022 · AD · dual UPS/PDU · NAS backup</dd>
+      <dt>Role</dt><dd>Scoping, build, vendor coordination</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>Construction nearby caused frequent power outages. Each one crashed the server, forced early closures, and had already caused data loss. The hardware had no redundancy, and there was no reliable backup. Operational limits ruled out moving to the cloud.</p>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li>Specified and built a new server with redundant power supplies and multi-disk storage.</li>
+      <li>Configured RAID 5 for a balance of cost, speed and fault tolerance, and kept spare drives on hand.</li>
+      <li>Installed Windows Server 2022 and Active Directory, and used scripts to provision users, groups and Group Policy.</li>
+      <li>Worked with the line-of-business software vendors to host their databases and applications on the new server.</li>
+      <li>Connected each power supply to a separate PDU on its own UPS, with monitoring to alert on power events.</li>
+      <li>Set up daily backups to a dedicated NAS and ran routine test restores.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 210" role="img" aria-labelledby="dg5t">
+        <title id="dg5t">Two independent power paths: UPS A to PDU A to power supply 1, and UPS B to PDU B to power supply 2, feeding one server with RAID 5 storage that backs up daily to a NAS.</title>
+        <defs><marker id="m5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="node" x="20" y="30" width="130" height="44" rx="6"/><text x="85" y="50" text-anchor="middle">UPS A</text><text class="sub" x="85" y="65" text-anchor="middle">monitored</text>
+        <rect class="node" x="20" y="130" width="130" height="44" rx="6"/><text x="85" y="150" text-anchor="middle">UPS B</text><text class="sub" x="85" y="165" text-anchor="middle">monitored</text>
+        <rect class="node" x="200" y="30" width="130" height="44" rx="6"/><text x="265" y="57" text-anchor="middle">PDU A</text>
+        <rect class="node" x="200" y="130" width="130" height="44" rx="6"/><text x="265" y="157" text-anchor="middle">PDU B</text>
+        <path class="link" d="M150 52 H198" marker-end="url(#m5)"/><path class="link" d="M150 152 H198" marker-end="url(#m5)"/>
+        <rect class="node key" x="390" y="30" width="170" height="144" rx="8"/>
+        <text x="475" y="58" text-anchor="middle">Server</text><text class="sub" x="475" y="74" text-anchor="middle">Windows Server 2022 · AD</text>
+        <rect class="node" x="405" y="88" width="140" height="26" rx="4"/><text class="sub" x="475" y="105" text-anchor="middle">RAID 5 + spare drives</text>
+        <text class="lbl" x="405" y="140">PSU 1 ← PDU A</text><text class="lbl" x="405" y="160">PSU 2 ← PDU B</text>
+        <path class="link" d="M330 52 L388 132" marker-end="url(#m5)"/><path class="link" d="M330 152 H388" marker-end="url(#m5)"/>
+        <rect class="node" x="600" y="80" width="100" height="44" rx="6"/><text x="650" y="100" text-anchor="middle">NAS</text><text class="sub" x="650" y="115" text-anchor="middle">daily backup</text>
+        <path class="net" d="M560 102 H598"/>
+      </svg>
+      <figcaption>Two independent power paths into one server, with backups going to a separate NAS.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>No single power supply, UPS or drive failure takes the server down, and backups are verified by regular test restores.</p>
+    <ul class="tags"><li>Windows Server</li><li>RAID</li><li>UPS / PDU</li><li>Backup &amp; DR</li><li>Vendor coordination</li></ul>
+  </article>
+
+  <!-- ============ 6. SURVEILLANCE ============ -->
+  <article class="case" id="surveillance">
+    <p class="eyebrow">Network design</p>
+    <h2>64-camera segmented surveillance network</h2>
+    <dl class="spec">
+      <dt>Client</dt><dd>Large retail store</dd>
+      <dt>Stack</dt><dd>TP-Link Omada ER707-M2 router · OC200 controller · 2× TL-SG3452P 48-port PoE+ switches · 24-port core · 64 PoE cameras</dd>
+      <dt>Role</dt><dd>Network design, deployment, troubleshooting (1010 IT Solutions)</dd>
+    </dl>
+
+    <h3>Problem</h3>
+    <p>The store needed 64 cameras on the same network that carries point-of-sale, office and guest traffic, without those systems interfering with each other.</p>
+
+    <h3>What I built</h3>
+    <ul class="points">
+      <li>Separate VLANs for cameras, point-of-sale, recorders (NVRs), office PCs and guest Wi-Fi, managed centrally from the Omada controller.</li>
+      <li>Two 48-port PoE+ switches to power the cameras and a 24-port core switch to connect them.</li>
+      <li>Remote viewing through DDNS and port forwarding, with the ISP gateway in bridge mode so the Omada router handles routing.</li>
+      <li>Fixed post-install camera failures by tracing IP conflicts, switching loops and suspect cabling, one cause at a time.</li>
+    </ul>
+
+    <figure class="diagram">
+      <svg class="dg" viewBox="0 0 720 250" role="img" aria-labelledby="dg6t">
+        <title id="dg6t">ISP gateway in bridge mode to Omada router, to a 24-port core switch managed by an OC200 controller, feeding two 48-port PoE+ camera switches; five VLANs separate cameras, NVRs, point-of-sale, office and guest Wi-Fi.</title>
+        <rect class="node" x="20" y="24" width="150" height="44" rx="6"/><text x="95" y="44" text-anchor="middle">ISP gateway</text><text class="sub" x="95" y="59" text-anchor="middle">bridge mode</text>
+        <rect class="node key" x="20" y="104" width="150" height="44" rx="6"/><text x="95" y="124" text-anchor="middle">Omada router</text><text class="sub" x="95" y="139" text-anchor="middle">ER707-M2 · DDNS</text>
+        <path class="link" d="M95 68 V104"/>
+        <rect class="node" x="240" y="24" width="170" height="44" rx="6"/><text x="325" y="44" text-anchor="middle">OC200 controller</text><text class="sub" x="325" y="59" text-anchor="middle">central management</text>
+        <rect class="node key" x="240" y="104" width="170" height="44" rx="6"/><text x="325" y="124" text-anchor="middle">Core switch</text><text class="sub" x="325" y="139" text-anchor="middle">24-port · VLAN trunks</text>
+        <path class="link" d="M170 126 H240"/><path class="link" d="M325 68 V104"/>
+        <rect class="node" x="500" y="64" width="200" height="44" rx="6"/><text x="600" y="84" text-anchor="middle">PoE+ switch A</text><text class="sub" x="600" y="99" text-anchor="middle">48-port · cameras</text>
+        <rect class="node" x="500" y="144" width="200" height="44" rx="6"/><text x="600" y="164" text-anchor="middle">PoE+ switch B</text><text class="sub" x="600" y="179" text-anchor="middle">48-port · cameras</text>
+        <path class="link" d="M410 120 L500 86"/><path class="link" d="M410 132 L500 166"/>
+        <text class="lbl" x="20" y="201">VLANs</text>
+        <rect class="node" x="70" y="186" width="80" height="22" rx="11"/><text class="sub" x="110" y="201" text-anchor="middle">Cameras</text>
+        <rect class="node" x="158" y="186" width="70" height="22" rx="11"/><text class="sub" x="193" y="201" text-anchor="middle">NVRs</text>
+        <rect class="node" x="236" y="186" width="60" height="22" rx="11"/><text class="sub" x="266" y="201" text-anchor="middle">POS</text>
+        <rect class="node" x="304" y="186" width="70" height="22" rx="11"/><text class="sub" x="339" y="201" text-anchor="middle">Office</text>
+        <rect class="node" x="382" y="186" width="90" height="22" rx="11"/><text class="sub" x="427" y="201" text-anchor="middle">Guest Wi-Fi</text>
+        <text class="lbl" x="70" y="232">Each VLAN is isolated, so cameras never share a segment with payment systems.</text>
+      </svg>
+      <figcaption>Logical layout showing port counts and VLAN roles. VLAN IDs and addressing are omitted.</figcaption>
+    </figure>
+
+    <p class="result"><b>Result</b>64 cameras online, with surveillance traffic kept off the payment and office networks. The project is complete.</p>
+    <ul class="tags"><li>VLAN design</li><li>PoE+</li><li>TP-Link Omada</li><li>NVR</li><li>Troubleshooting</li></ul>
+  </article>
+
+  <!-- ============ MORE WORK ============ -->
+  <section id="more" style="scroll-margin-top:90px">
+    <h2 class="section-title">More work</h2>
+    <p class="muted prose">Shorter projects from consulting and earlier roles.</p>
+    <div class="more">
+      <article class="proposal">
+        <span class="status done">Medical · 3 sites</span>
+        <h3>Imaging transfers over site-to-site VPN</h3>
+        <p>Configured site-to-site VPN and DICOM settings across a three-site medical practice, working with a partner radiology office, so X-rays and imaging move securely between locations.</p>
+      </article>
+      <article class="proposal">
+        <span class="status done">Accounting · 6 users</span>
+        <h3>Microsoft 365 migration</h3>
+        <p>Moved an accounting firm to Microsoft 365 on its own domain: mail DNS records, Entra ID, enforced MFA and license assignment, plus a standard onboarding process for new hires.</p>
+      </article>
+      <article class="proposal">
+        <span class="status done">Nonprofit · 50+ users</span>
+        <h3>Cisco to Fortinet cutover</h3>
+        <p>Led the move from aging Cisco devices to Fortinet at a headquarters site with several satellite locations, with zero production downtime. Set up SSL VPN remote access with RADIUS and LDAP authentication.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ DESIGN PROPOSALS ============ -->
+  <section id="proposals" style="scroll-margin-top:90px">
+    <h2 class="section-title">Designs and proposals</h2>
+    <p class="muted prose">Work in the design or proposal stage, including how I weighed the options.</p>
+
+    <div class="proposals">
+      <article class="proposal wide" id="campus">
+        <span class="status progress">In progress</span>
+        <h3>Religious center and school: network, server and AV</h3>
+        <dl class="spec">
+          <dt>Building</dt><dd>Gymnasium, two prayer halls, 20+ classrooms, offices and library · about 50 users</dd>
+          <dt>Scope</dt><dd>One MDF plus gym, library and school IDFs · Wi-Fi · streaming cameras and SDI runs · multi-display video distribution · student security controls</dd>
+        </dl>
+        <p>I'm designing and deploying the full network, server and AV infrastructure. I laid out the low-voltage plan on the architect's floor plan. Each drop is color-coded by the closet it homes to, so the installers know where every cable terminates. Each area has a drop schedule (room, purpose, count) next to it, and the prayer halls and gym are planned for the streaming standard above.</p>
+        <figure class="drawing">
+          <a href="images/coldwater-plan.png" target="_blank" rel="noopener"><img src="images/coldwater-plan.png" alt="Floor plan of a mosque and school campus marked with color-coded data drops for the MDF and three IDFs, wireless access points, streaming cameras, SDI connections, and yellow drop-schedule tables for the gym, prayer halls and offices." loading="lazy" width="2280" height="1424"></a>
+          <figcaption>Network overlay on the architect's floor plan. Device names and architect notes removed. Click to enlarge.</figcaption>
+        </figure>
+      </article>
+      <article class="proposal">
+        <span class="status next">Proposal</span>
+        <h3>Three-site medical practice: on-prem vs. cloud</h3>
+        <dl class="spec">
+          <dt>Scope</dt><dd>~50 users · 3 locations · network and VLANs already in place</dd>
+          <dt>Design</dt><dd>One server per location with a domain controller, built on ASRock Rack with AMD EPYC 4000-series</dd>
+        </dl>
+        <p>Built around HIPAA and PCI requirements. I compared the on-prem design against a cloud model on Microsoft 365 Business Premium. With little existing Microsoft licensing, the cloud option meant new per-user costs, so the proposal laid out both paths for the client to decide on total cost, not just hardware price.</p>
+      </article>
+
+      <article class="proposal">
+        <span class="status next">Proposal</span>
+        <h3>Two-office nonprofit network on Grandstream</h3>
+        <dl class="spec">
+          <dt>Scope</dt><dd>2 offices · 8 workstations · ~14 cable runs</dd>
+          <dt>Design</dt><dd>Wi-Fi 7 access point per office · 24–48 ports of switching · 4U cabinet with UPS and ISP shelf per office</dd>
+        </dl>
+        <p>A full parts list and labor plan for a grant-funded organization, standardized on one vendor so both offices are managed from a single cloud console. VoIP is planned as a second phase.</p>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>Osamah Almaweri · Dearborn, Michigan</span>
+    <span><a href="mailto:osamahalmaweri@gmail.com">osamahalmaweri@gmail.com</a></span>
+  </div>
+</footer>
+</body>
+</html>
